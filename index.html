@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    h2 {
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+<h2>Class Monitor Vote</h2>
+
+<p>Student Name:</p>
+<input type="text" id="searchInput" onkeyup="searchName()" placeholder="Enter student name...">
+
+<p>Choose Monitor:</p>
+<select id="monitorSelect">
+  <option value="Suresh">Suresh</option>
+  <option value="Deepank">Deepank</option>
+  <option value="Abhik">Abhik</option>
+</select>
+
+<button onclick="vote()">Vote</button>
+
+<p id="result"></p>
+
+<script>
+var votes = {
+  Suresh: 0,
+  Deepank: 0,
+  Abhik: 0
+};
+
+function vote() {
+  var monitorSelect = document.getElementById("monitorSelect");
+  var selectedMonitor = monitorSelect.options[monitorSelect.selectedIndex].value;
+  votes[selectedMonitor]++;
+  updateResult();
+}
+
+function updateResult() {
+  var result = document.getElementById("result");
+  var totalVotes = Object.values(votes).reduce((acc, curr) => acc + curr, 0);
+  result.innerHTML = "Total Votes: " + totalVotes + "<br>";
+  for (var monitor in votes) {
+    result.innerHTML += monitor + ": " + votes[monitor] + "<br>";
+  }
+}
+
+function searchName() {
+  var input, filter, select, options, i;
+  input = document.getElementById("searchInput");
+  filter = input.value.toUpperCase();
+  select = document.getElementById("monitorSelect");
+  options = select.getElementsByTagName("option");
+  for (i = 0; i < options.length; i++) {
+    if (options[i].innerHTML.toUpperCase().indexOf(filter) > -1) {
+      options[i].style.display = "";
+    } else {
+      options[i].style.display = "none";
+    }
+  }
+}
+
+</script>
+
+</body>
+</html>
